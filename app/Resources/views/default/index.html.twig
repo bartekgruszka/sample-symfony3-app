@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {{ form_start(formProcess) }}
+    <div class="row">
+        <div class="col-md-9">
+            {{ form_row(formProcess.text) }}
+        </div>
+        <div class="col-md-3">
+            <div class="form-group clearfix">
+                {{ form_row(formProcess.process, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+            </div>
+            <div class="form-group clearfix">
+                {{ form_row(formProcess.name) }}
+                {{ form_row(formProcess.save, {'attr': {'class': 'btn btn-success pull-right'}}) }}
+            </div>
+            {{ form_end(formProcess) }}
+
+            {{ form_start(formLoad) }}
+            {{ form_row(formLoad.entity) }}
+            {{ form_row(formLoad.load, {'attr': {'class': 'btn btn-success pull-right'}}) }}
+            {{ form_end(formLoad) }}
+        </div>
+    </div>
+{% endblock %}

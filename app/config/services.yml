@@ -1,0 +1,33 @@
+services:
+    text_analyzer.text_to_analyze_param_converter:
+        class: TextAnalyzerBundle\Request\TextToAnalyzeParamConverter
+        arguments:
+            - "@=service('doctrine.orm.default_entity_manager').getRepository('TextAnalyzerBundle:TextToAnalyze')"
+        tags:
+          - { name: request.param_converter, priority: -2, converter: service }
+
+
+    text_analyzer.analyzer.count_of_words:
+        public: false
+        class: TextAnalyzerBundle\TextAnalyzer\CountOfWordsTextAnalyzer
+
+    text_analyzer.analyzer.count_of_distinct_words:
+        public: false
+        class: TextAnalyzerBundle\TextAnalyzer\CountOfDistinctWordsTextAnalyzer
+
+    text_analyzer.analyzer.most_frequent_word:
+        public: false
+        class: TextAnalyzerBundle\TextAnalyzer\MostFrequentWordTextAnalyzer
+
+    text_analyzer.analyzer.distinct_words_appearance:
+        public: false
+        class: TextAnalyzerBundle\TextAnalyzer\DistinctWordsAppearanceTextAnalyzer
+
+    text_analyzer.analyzer:
+        class: TextAnalyzerBundle\TextAnalyzer\ChainedTextAnalyzer
+        arguments:
+            - text_analyzers:
+                - "@text_analyzer.analyzer.count_of_words"
+                - "@text_analyzer.analyzer.count_of_distinct_words"
+                - "@text_analyzer.analyzer.most_frequent_word"
+                - "@text_analyzer.analyzer.distinct_words_appearance"

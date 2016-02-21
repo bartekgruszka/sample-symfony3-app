@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{{ textToAnalyze.name|default('Unsaved document') }}</h3>
+            <blockquote>
+                <p>{{ textToAnalyze.text }}</p>
+            </blockquote>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th>Word</th>
+                    <th># times appeared</th>
+                </tr>
+                {% for word, number_of_appearances in textAnalyzer.result.distinct_words_appearance %}
+                    <tr>
+                        <td>{{ word }}</td>
+                        <td>{{ number_of_appearances }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-6">
+            Count of words: <span class="badge">{{ textAnalyzer.result.count_of_words }}</span><br>
+            Count of distinct words: <span class="badge">{{ textAnalyzer.result.count_of_distinct_words }}</span><br>
+            Most frequent word: <span class="badge">{{ textAnalyzer.result.most_frequent_word }}</span><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('index') }}" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+{% endblock %}
